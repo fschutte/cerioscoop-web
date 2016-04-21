@@ -21,7 +21,6 @@ public class VoorstellingService {
 	private static ResultSet rs = null;
 	private static DateUtils DU = new DateUtils();
 	
-
 	public List<Voorstelling> getVoorstelling(){
 		List<Voorstelling> items = new ArrayList<>();
 		try {stmt = conn.createStatement();
@@ -37,6 +36,7 @@ public class VoorstellingService {
 	    	throw new VoorstellingServiceException("Something went terribly wrong while retrieving the filmagenda.", e);
 	    }
 	}
+	
 	/**
 	 * @return
 	 * @Todo maak een constructor zonder parameters

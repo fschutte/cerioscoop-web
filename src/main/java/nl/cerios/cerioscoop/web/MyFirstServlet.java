@@ -39,9 +39,9 @@ public class MyFirstServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<Film> items = VS.getFilms();
-		Film items2 = VS.getFirstFilmAfterCurrentDate();
+		Film items2 = VS.getFirstFilmAfterCurrentDate();// let op een null pointer
 		java.util.Date premMoment = null;
-		String premMomentDB = null;
+		String premMomentDB = DU.formatHeidi(items2.getPremiereDatum())+" "+DU.formatTijd(items2.getPremiereTijd());
 		
 		items.sort(new Comparator<Film>() {
 
@@ -75,8 +75,6 @@ public class MyFirstServlet extends HttpServlet {
 					}
 			    html.append("</tbody>")
 					.append("</table>");
-			   // for (Film item : items) {
-			    	premMomentDB = DU.formatHeidi(items2.getPremiereDatum())+" "+DU.formatTijd(items2.getPremiereTijd());
 					try {
 						premMoment = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(premMomentDB);
 					} catch (ParseException e) {
@@ -88,7 +86,6 @@ public class MyFirstServlet extends HttpServlet {
 					.append("<p>Vandaag is het " +DU.getDate())
 					.append("<br />De eerstvolgende film: "+items2.getNaam() +" is op "+DU.format2(items2.getPremiereDatum())+" om "+DU.formatTijd(items2.getPremiereTijd()))
 					.append("<br />Dat is over "+ DU.calculateTime(DU.getSecondsBetween(premMoment, DU.getCurrentDate())) +"</p>");
-			//    	}
 			    html.append("</body>")
 			        .append("</html>");
 
