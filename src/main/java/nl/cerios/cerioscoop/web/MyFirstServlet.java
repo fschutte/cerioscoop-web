@@ -35,13 +35,20 @@ public class MyFirstServlet extends HttpServlet {
 	 * 
 	 * R40><link href='/cerioscoop-web/cerioscoop.css' type='text/css' rel='stylesheet' />
 	 * LET OP:		projectNaam/cssFileNaam.css		zo verwijs je naar de juiste locatie!
+	 * Parsing and Formatting Strings: https://docs.oracle.com/javase/tutorial/datetime/iso/format.html
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Film> items = VS.getFilms();
-		Film items2 = VS.getFirstFilmAfterCurrentDate();// let op een null pointer
+		final List<Film> items = VS.getFilms();
+		final Film items2 = VS.getFirstFilmAfterCurrentDate();// let op een null pointer
 		java.util.Date premMoment = null;
-		String premMomentDB = DU.formatHeidi(items2.getPremiereDatum())+" "+DU.formatTijd(items2.getPremiereTijd());
+		final String premMomentDB = DU.formatHeidi(items2.getPremiereDatum())+" "+DU.formatTijd(items2.getPremiereTijd());
+		
+		try {
+			premMoment = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(premMomentDB);
+		} catch (ParseException e) {
+			throw new MyFirstServletException("Something went wrong while parsing premiere datum.", e);
+		}
 		
 		items.sort(new Comparator<Film>() {
 
@@ -57,7 +64,7 @@ public class MyFirstServlet extends HttpServlet {
 			}
 		});
 		
-		StringBuilder html = new StringBuilder("<!DOCTYPE html>")
+		final StringBuilder html = new StringBuilder("<!DOCTYPE html>")
 			        .append("<html>")
 			        .append("<head><title>Filmagenda</title><link href='/cerioscoop-web/cerioscoop.css' type='text/css' rel='stylesheet' /></head>")
 			        .append("<body><h1>Voorstellingen</h1>")
@@ -74,13 +81,8 @@ public class MyFirstServlet extends HttpServlet {
 					.append("</td></tr>");
 					}
 			    html.append("</tbody>")
-					.append("</table>");
-					try {
-						premMoment = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(premMomentDB);
-					} catch (ParseException e) {
-						throw new MyFirstServletException("Something went wrong while parsing premiere datum.", e);
-					}
-			    html.append("</tbody>")
+					.append("</table>")
+			    	.append("</tbody>")
 					.append("</table>")
 					.append("<h1></h1>")
 					.append("<p>Vandaag is het " +DU.getDate())

@@ -60,6 +60,7 @@ public class DateUtils {
 	 * 1 sec = 0.0166 666 667 min  //50 000 000 sec // 19,999999999958 sec
 	 * 
 	 * http://stackoverflow.com/questions/14497902/convert-seconds-to-w-d-h-m-format-in-java
+	 * http://stackoverflow.com/questions/11357945/java-convert-seconds-into-day-hour-minute-and-seconds-using-timeunit
 	 * http://stackoverflow.com/questions/25903354/java-convert-seconds-to-minutes-hours-and-days
 	 * http://stackoverflow.com/questions/4540684/java-round-up-any-number
 	 * 
