@@ -1,9 +1,10 @@
 package nl.cerios.cerioscoop.service;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Connection;
+
 
 public class FilmAgendaDatabaseConnection {
 	static Connection con;
